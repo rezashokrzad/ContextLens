@@ -1,3 +1,7 @@
+# Programming language
+python==3.9.7
+
+# Python packages
 pandas == '1.5.3'
 dash == '2.7.1'
 plotly == '5.11.0'
