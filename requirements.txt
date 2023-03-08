@@ -1,13 +1,5 @@
-# Programming language
-python==3.9.7
-
-# Python packages
 pandas == '1.5.3'
 dash == '2.7.1'
 plotly == '5.11.0'
 openpyxl == '3.0.10'
 sklearn == '0.23.1'
-transformers == '4.26.1'
-torch == '1.9.0'
-torchvision == '0.10.0'
-umap-learn == '0.4.6'

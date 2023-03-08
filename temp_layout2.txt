@@ -1,0 +1,1 @@
+{'title': {'text': 'Dim1'}, 'type': 'linear', 'range': [-6.842955864776121, 8.344246597141414], 'autorange': True}
