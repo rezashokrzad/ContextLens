@@ -19,7 +19,7 @@ import numpy as np
 # import matplotlib.pyplot as plt
 # import matplotlib.patches as mpatches
 # from matplotlib import cm
-c_map = plt.cm.get_cmap('Paired')
+# c_map = plt.cm.get_cmap('Paired')
 # import plotly.graph_objects as go
 # import plotly.express as px
 # from collections import Counter
