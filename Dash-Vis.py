@@ -169,8 +169,8 @@ app.layout = html.Div([
     html.H6('An embedding visualization and clustering tool', style={'text-align': 'center'}),
     html.Center([html.Div(dcc_upload,id='output-data-upload'),
                  html.Div([
-                     html.Div(dcc_input_text,id="input_word", style={'width': '15%', 'display': 'inline-block'}),
-                     html.Div(dcc_input_number,id="input_number", style={'width': '15%', 'display': 'inline-block'})]),
+                     html.Div(dcc_input_text,id="input_word", style={'width': '17%', 'display': 'inline-block'}),
+                     html.Div(dcc_input_number,id="input_number", style={'width': '17%', 'display': 'inline-block'})]),
                   html.Button('Process', id='process_button'),
                   html.Div(html.A(id='log', children='Ready', style={"color": "blue"}))
 
