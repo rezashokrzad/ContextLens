@@ -228,4 +228,4 @@ def serve_static(path):
     return flask.send_from_directory(os.path.join(root_dir, 'download'), path)
 
 if __name__ == '__main__':
-    app.run_server(debug=True, use_reloader=False, host="0.0.0.0", port=443)
+    app.run_server(debug=True, use_reloader=False, host="0.0.0.0", port=80)
