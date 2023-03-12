@@ -16,7 +16,7 @@ import dash_html_components as html
 # import nltk
 
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 # import matplotlib.patches as mpatches
 # from matplotlib import cm
 c_map = plt.cm.get_cmap('Paired')
