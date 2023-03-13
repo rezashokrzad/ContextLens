@@ -233,11 +233,11 @@ def dimension_reduction_pca(embs):
     return pca_embs
 
 def dimension_reduction_umap(embs):
-    # umap_5C = UMAP(n_neighbors=5, n_components=5, random_state=42)
-    # umap_embs = umap_5C.fit_transform(embs)
-    # return umap_embs
+    umap_5C = UMAP(n_neighbors=5, n_components=5, random_state=42)
+    umap_embs = umap_5C.fit_transform(embs)
+    return umap_embs
 
-    return dimension_reduction_pca(embs)
+    #return dimension_reduction_pca(embs)
         
 
 #sense is the base. We compare all combinations of labels to find the best match.
