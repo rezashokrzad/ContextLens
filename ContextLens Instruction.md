@@ -24,3 +24,5 @@
    + a. Click on the hyperlink below the data frame menu to download a file containing the columns: sentences, dimensions after reduction procedures, and annotated labels.
 
 > Note: ContextLens is designed to be user-friendly and interactive, allowing linguists to explore and interpret word embeddings quickly and easily. If you have any questions or encounter any issues while using the tool, refer to the additional resources on the GitHub repository or contact the developer for assistance.
+
+![dash02-cold](https://user-images.githubusercontent.com/72080909/225021955-bc2d45e2-e5c4-438b-b940-c2fa2a1656a0.png)
