@@ -8,6 +8,7 @@ import flask
 import os
 import utils
 import dash_bootstrap_components as dbc
+import numpy as np
 
 
 
@@ -166,7 +167,10 @@ dcc_input_number = dcc.Input(id='number', value='', type='text', placeholder='#c
 
 app.layout = html.Div([
     html.H1('ContextLens', style={'text-align': 'center'}),
-    html.H6('An embedding visualization and clustering tool', style={'text-align': 'center'}),
+    html.Center(html.Div([
+    html.H6('An embedding visualization and clustering tool', style={'display': 'inline-block','margin':'6'}),
+    html.A(",  (Instruction and about)", href='https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md', target="_blank",style={'display': 'inline-block'})
+    ])),
     html.Center([html.Div(dcc_upload,id='output-data-upload'),
                  html.Div([
                      html.Div(dcc_input_text,id="input_word", style={'width': '17%', 'display': 'inline-block'}),
@@ -269,10 +273,10 @@ def updateGraph(df_name, method_name, label_name, x_field, y_field, z_field, dat
         data_2d['layout']['yaxis'] = {**data_2d['layout']['yaxis'], 'title': {'text': y_field}}
 
     current_df = dict_main[df_name]
-    current_df_name = "SemCor_" + df_name
+    current_df_name =  df_name + '_' + str(np.random.randint(1000)+1)
     current_df.to_excel("./download/" + current_df_name +".xlsx", encoding='utf-8')
     url_string = './download/' +current_df_name+ '.xlsx'
-    print(url_string)
+    # print(url_string)
     return [[html.A("Download link", href=url_string, target="_blank", download=url_string)],
             {'data': source, 'layout': data['layout']},
             {'data': source_2d, 'layout': data_2d['layout']}]
@@ -284,8 +288,8 @@ def updateGraph(df_name, method_name, label_name, x_field, y_field, z_field, dat
 def update_output(content, filename, date):
     global user_doc
     df = utils.parse_contents(content, filename, date)
-    print('update_output')
-    print(df.head())
+    # print('update_output')
+    # print(df.head())
     
     outputlog = 'Upload done'
     
@@ -315,17 +319,22 @@ def process_file(clicks, input_w, input_n):
    
     try:
         input_n = int(input_n)
+        if input_n <= 0:
+            return html.A("Number of clusters should be a positive integer",id="log")    
     except ValueError:
-        input_n = 5
+        if input_n == '':
+            input_n = 5
+        else:
+            return html.A("Invalid number of clusters",id="log")    
 
     if not user_doc.empty and user_doc.shape[0] > 200:
         return html.A("Number of sentences should not exceed 200",id="log")
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
-        try:
-            df9 = utils.get_dataframe(user_doc, input_w, input_n) # sense level
-            dict_main['df_user'] = df9
-        except:
-            return html.A("The provided word is not presented in your doc",id="log")
+        # try:
+        df9 = utils.get_dataframe(user_doc, input_w, input_n) # sense level
+        dict_main['df_user'] = df9
+        # except:
+            # return html.A("The provided word is not presented in your doc",id="log")
             
     elif len(input_w[0]) == 0 and user_doc.empty:
         return html.A("Please upload your file and provide words",id="log")

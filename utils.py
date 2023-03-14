@@ -8,7 +8,7 @@ Created on Thu Feb  9 18:02:18 2023
 import base64
 import pandas as pd
 import io
-import dash_html_components as html
+# import dash_html_components as html
 # import dash_table
 # import datetime
 #import initial packages
@@ -71,7 +71,7 @@ import itertools
 #dimensionality reduction
 from sklearn.decomposition import PCA
 # from sklearn.manifold import TSNE
-# from umap import UMAP
+from umap import UMAP
 # from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 # import scipy.cluster.hierarchy as sch # importing scipy.cluster.hierarchy for dendrogram
 from sklearn.preprocessing import MinMaxScaler
@@ -94,14 +94,19 @@ def create_df5d(pca_bert_base_5C, method_name):
   inter_df.columns = my_col
   return inter_df
 
+def emphasize_word(sent_list , word_label_string):
+    for i in range(len(word_label_string)):
+        sent_list[i] = sent_list[i].replace(word_label_string[i] , '<em>' + word_label_string[i] + '</em>')
+
+    return sent_list
 def standardize_dataframe \
-(sent_idx,sent_list, embs_umap_norm, embs_pca_norm , word_label , voted_label,weighted_vote_label):
+(sent_idx,sent_list, embs_umap_norm, embs_pca_norm , word_label , voted_label,weighted_vote_label,word_label_string):
     
     pca_bert_df = create_df5d(embs_pca_norm, method_name='PCA_BERT')
     umap_bert_df = create_df5d(embs_umap_norm, method_name='UMP_BERT')
     
     interactive_df = pd.concat([pca_bert_df, umap_bert_df], axis=1)
-    interactive_df['text'] = sent_list
+    interactive_df['text'] = emphasize_word(sent_list , word_label_string)
     interactive_df['sense_label'] = np.zeros((len(sent_idx)),dtype=np.int16)
     interactive_df['word_label'] = word_label
     interactive_df['simple_majority_voting'] = voted_label
@@ -186,6 +191,7 @@ def filter_embs(doc , embs, word,layer_num): # embs: list of sentences | word: l
     cnt = 0
     word_em_list = []
     word_label = []
+    word_label_string = []
     sent_list = []
     sent_idx = []
     for i,sen in doc.iterrows():
@@ -199,15 +205,45 @@ def filter_embs(doc , embs, word,layer_num): # embs: list of sentences | word: l
                 word_em = embs[cnt][idx , :]
                 word_em_list.append(word_em)
                 word_label.append(lab)    
+                word_label_string.append(w)
                 sent_list.append(sen.values[0])
                 sent_idx.append(i+1)
             except:
-                pass
+                tokenized_word = tokenizer.tokenize(w)
+                if len(tokenized_word) > 1: # compound word
+                    print(tokenized_word)
+                    idx = -1
+                    for ii in range(len(tokenized_text) - len(tokenized_word) + 1):
+                        found = True
+                        for j in range(len(tokenized_word)):
+                            if tokenized_text[ii+j] != tokenized_word[j]:
+                                found = False
+                                break
+                        if found:
+                            print(ii)
+                            idx = ii
+                            break
+                    if idx != -1: # found
+                        temp = embs[cnt][idx:idx+len(tokenized_word) , :]
+                        print(temp)
+                        print(temp.shape)
+                        word_em = torch.mean(embs[cnt][idx:idx+len(tokenized_word) , :],axis = 0)
+                        print(word_em.shape)
+                        print(word_em)
+                        word_em_list.append(word_em)
+                        word_label.append(lab)    
+                        word_label_string.append(w)
+                        sent_list.append(sen.values[0])
+                        sent_idx.append(i+1)
+                    
+                else: # word not found in text
+                    pass
+                
             lab += 1      
         cnt += 1
     
     word_em_list = np.vstack(word_em_list)
-    return word_em_list, word_label, sent_list, sent_idx
+    return word_em_list, word_label,word_label_string, sent_list, sent_idx
 
 
 def normalization(emb_red):
@@ -237,7 +273,7 @@ def dimension_reduction_umap(embs):
     umap_embs = umap_5C.fit_transform(embs)
     return umap_embs
 
-    #return dimension_reduction_pca(embs)
+    # return dimension_reduction_pca(embs)
         
 
 #sense is the base. We compare all combinations of labels to find the best match.
@@ -305,7 +341,7 @@ def get_dataframe(doc, word, n_cluster=5):
     layer_num = 8
     embs = get_bert_embs(doc, layer_num)
     
-    embs_filtered, word_label, sent_list, sent_idx = filter_embs(doc , embs, word, layer_num)
+    embs_filtered, word_label,word_label_string, sent_list, sent_idx = filter_embs(doc , embs, word, layer_num)
     
     cluster_kmeans_idx = clustering_kmeans(embs_filtered, n_cluster)
     cluster_agg_idx = clustering_agg(embs_filtered, n_cluster)
@@ -329,7 +365,7 @@ def get_dataframe(doc, word, n_cluster=5):
     embs_pca_norm = normalization(embs_pca)
     
     df = standardize_dataframe \
-    (sent_idx,sent_list, embs_umap_norm, embs_pca_norm , word_label ,voted_label,weighted_vote_label)
+    (sent_idx,sent_list, embs_umap_norm, embs_pca_norm , word_label ,voted_label,weighted_vote_label,word_label_string)
     
     df.to_excel('df.xlsx',index=False)
     print(df.columns)
