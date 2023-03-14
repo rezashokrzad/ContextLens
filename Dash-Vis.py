@@ -330,11 +330,11 @@ def process_file(clicks, input_w, input_n):
     if not user_doc.empty and user_doc.shape[0] > 200:
         return html.A("Number of sentences should not exceed 200",id="log")
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
-        # try:
-        df9 = utils.get_dataframe(user_doc, input_w, input_n) # sense level
-        dict_main['df_user'] = df9
-        # except:
-            # return html.A("The provided word is not presented in your doc",id="log")
+        try:
+            df9 = utils.get_dataframe(user_doc, input_w, input_n) # sense level
+            dict_main['df_user'] = df9
+        except:
+            return html.A("The provided word is not presented in your doc",id="log")
             
     elif len(input_w[0]) == 0 and user_doc.empty:
         return html.A("Please upload your file and provide words",id="log")
