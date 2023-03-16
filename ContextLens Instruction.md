@@ -17,7 +17,7 @@
     + a. Click on the "Process" button to generate the BERT-base embeddings, PCA and UMAP projections, and combined clustering labels. 
     + b. you can find the result, called df_user, in the leftmost drop-down menu, data frame. 
 6. **Exploring the visualizations**: 
-    + a. Use the two other drop-down menus on the left side of the dashboard to explore different options for visualizing the embeddings and clusters. 
+    + a. Use the two other drop-down menus on the left side of the dashboard to explore different options for visualizing the embeddings and clusters. For the latter note that if you are entering a single word the sense-lable shuld be selected, otherwise word-label is the option.
     + b. Use the three drop-down menus on the right side of the dashboard to select your preferred dimensions for the PCA and UMAP projections.
     + c. Hover over data points to see further detail, including the sentence the word is in, the index of the sentence in the data frame, and the label of the word.
 7. **Exporting data**:
