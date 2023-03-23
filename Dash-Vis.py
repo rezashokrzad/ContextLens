@@ -24,7 +24,7 @@ df6 = pd.read_excel('Hotel_df_list2.xlsx')
 df7 = pd.read_excel('Hotel_df_list3.xlsx')
 df8 = pd.read_excel('Hotel_df_list4.xlsx')
 df9 = pd.DataFrame()
-
+df0 = pd.read_excel('SemCor_interactive_df_state.xlsx')
 #receive tooltip content
 tooltip_columns = ['text', 'idx', 'sense_label' , 'word_label','simple_majority_voting', 'weighted_majority_voting']
 tooltip_list = df1[tooltip_columns].values.tolist()
@@ -35,7 +35,8 @@ app = dash.Dash(external_stylesheets=[dbc.themes.MATERIA, 'stylesheet.css'])
 # from dash_extensions.enrich import Output, DashProxy, Input, MultiplexerTransform, html
 
 dict_main = {'df_present': df1, 'df_cold': df2, 'df_great': df3, 'df_domestic': df4,
-             'df_hotel_list1': df5, 'df_hotel_list2': df6, 'df_hotel_list3': df7, 'df_hotel_list4': df8, 'df_user': df9}
+             'df_hotel_list1': df5, 'df_hotel_list2': df6, 'df_hotel_list3': df7,
+             'df_hotel_list4': df8, 'df_user': df9, 'df_state': df0}
 data = list(dict_main.keys())
 data_2d = list(dict_main.keys())
 
@@ -146,7 +147,7 @@ dcc_upload = dcc.Upload(id='upload-data', children=html.Div(['Drag & Drop or ',
                         # Allow multiple files to be uploaded
                         multiple=False)
 
-dcc_input_text = dcc.Input(id='word', value='', type='text', placeholder='your desire word(s), separated by ","',
+dcc_input_text = dcc.Input(id='word', value='', type='text', placeholder='your desire word(s), seperated by ","',
                       style={'width': '90%',
                              'height': '25px',
                              'lineHeight': '50px',
@@ -243,8 +244,6 @@ def updateGraph(df_name, method_name, label_name, x_field, y_field, z_field, dat
     source = data['data']
     source_2d = data_2d['data']
     df = dict_main[df_name]
-    print('________________________________')
-    print(df.head())
     source[0].update({'customdata': df[tooltip_columns].values.tolist()})
     source_2d[0].update({'customdata': df[tooltip_columns].values.tolist()})
     
@@ -276,7 +275,6 @@ def updateGraph(df_name, method_name, label_name, x_field, y_field, z_field, dat
     current_df_name =  df_name + '_' + str(np.random.randint(1000)+1)
     current_df.to_excel("./download/" + current_df_name +".xlsx", encoding='utf-8')
     url_string = './download/' +current_df_name+ '.xlsx'
-    # print(url_string)
     return [[html.A("Download link", href=url_string, target="_blank", download=url_string)],
             {'data': source, 'layout': data['layout']},
             {'data': source_2d, 'layout': data_2d['layout']}]
@@ -288,8 +286,6 @@ def updateGraph(df_name, method_name, label_name, x_field, y_field, z_field, dat
 def update_output(content, filename, date):
     global user_doc
     df = utils.parse_contents(content, filename, date)
-    # print('update_output')
-    # print(df.head())
     
     outputlog = 'Upload done'
     
@@ -314,9 +310,6 @@ def process_file(clicks, input_w, input_n):
     global user_doc
     input_w = input_w.split(',')
     
-    # print(user_doc.head())
-    # print(user_doc.values)
-   
     try:
         input_n = int(input_n)
         if input_n <= 0:
@@ -330,11 +323,11 @@ def process_file(clicks, input_w, input_n):
     if not user_doc.empty and user_doc.shape[0] > 200:
         return html.A("Number of sentences should not exceed 200",id="log")
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
-        try:
-            df9 = utils.get_dataframe(user_doc, input_w, input_n) # sense level
-            dict_main['df_user'] = df9
-        except:
-            return html.A("The provided word is not presented in your doc",id="log")
+        # try:
+        df9 = utils.get_dataframe(user_doc, input_w, input_n) # sense level
+        dict_main['df_user'] = df9
+        # except:
+            # return html.A("The provided word is not presented in your doc",id="log")
             
     elif len(input_w[0]) == 0 and user_doc.empty:
         return html.A("Please upload your file and provide words",id="log")
@@ -351,10 +344,7 @@ def process_file(clicks, input_w, input_n):
         return html.A("Something is wrong with inputs",id="log")
         # return "Something is wrong with inputs"
     
-    # TODO: update our df combobox to df9
-    
-    print('head: ',df9.head())
-    
+    # TODO: update our df combobox to df9    
     return html.A("Process done, please select df_user from dataframe dropdown",id="log")
     # return "Process done"
 
