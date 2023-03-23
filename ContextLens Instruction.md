@@ -4,7 +4,7 @@
     + b. You should see the ContextLens dashboard.
 2. **Uploading data**: 
     + a. Click on the "Choose File" button to select a ".csv" or ".xlsx" file to upload. 
-    + b. The file should contain up to 200 sentences.
+    + b. The file should contain a single column of up to 200 sentences.
 3. **Specifying your desired word**:
     + a. In the "Desired word" text box, enter the word you want to explore.
     + b. You can also enter multiple distinct words by separating them with commas.
