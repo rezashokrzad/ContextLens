@@ -26,7 +26,6 @@ df8 = pd.read_excel('Hotel_df_list4.xlsx')
 df9 = pd.DataFrame()
 df0 = pd.read_excel('SemCor_interactive_df_state171.xlsx')
 df00 = pd.read_excel('SemCor_interactive_df_state110.xlsx')
-df000 = pd.read_excel('SemCor_interactive_df_state281.xlsx')
 
 #receive tooltip content
 tooltip_columns = ['text', 'idx', 'sense_label' , 'word_label','simple_majority_voting', 'weighted_majority_voting']
@@ -39,7 +38,7 @@ app = dash.Dash(external_stylesheets=[dbc.themes.MATERIA, 'stylesheet.css'])
 
 dict_main = {'df_present': df1, 'df_cold': df2, 'df_great': df3, 'df_domestic': df4,
              'df_hotel_list1': df5, 'df_hotel_list2': df6, 'df_hotel_list3': df7,
-             'df_hotel_list4': df8, 'df_user': df9, 'df_state_171': df0, 'df_state_110': df00, 'df_state_281': df000}
+             'df_hotel_list4': df8, 'df_user': df9, 'df_state_171': df0, 'df_state_110': df00}
 data = list(dict_main.keys())
 data_2d = list(dict_main.keys())
 
