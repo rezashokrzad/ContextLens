@@ -65,7 +65,7 @@ comp_z = list(dict_comp_z.keys())
 
 hovertext = "%{customdata[0]}<br>idx=%{customdata[1]}<br>Sense Label=%{customdata[2]} \
 <br>Word Label=%{customdata[3]}<br>Simple Majority Voting=%{customdata[4]}<br>Weighted Majority Voting=%{customdata[5]}<extra></extra>"
-clr_scale = [[0, 'rgb(255,0,0)'], [0.1, 'rgb(255,128,0)'], [0.2, 'rgb(100,205,100)'], 
+clr_scale = [[0, 'rgb(255,0,0)'], [0.1, 'rgb(255,128,50)'], [0.2, 'rgb(100,205,200)'], 
              [0.3, 'rgb(0,255,0)'], [0.4, 'rgb(140,150,140)'], 
              [0.5, 'rgb(50,50,50)'], [0.6, 'rgb(255,50,255)'], 
              [0.7, 'rgb(120,190,120)'], [0.8, 'rgb(200,50,235)'],
