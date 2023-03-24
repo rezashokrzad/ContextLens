@@ -27,7 +27,7 @@ df9 = pd.DataFrame()
 df0 = pd.read_excel('SemCor_interactive_df_state171.xlsx')
 df00 = pd.read_excel('SemCor_interactive_df_state110.xlsx')
 df01 = pd.read_excel('Hotel_df_list01.xlsx')
-df02 = pd.read_excel('Hotel_df_list02.xlsx')
+df02 = pd.read_excel('Hotel_df_list002.xlsx')
 
 #receive tooltip content
 tooltip_columns = ['text', 'idx', 'sense_label' , 'word_label','simple_majority_voting', 'weighted_majority_voting']
