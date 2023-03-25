@@ -14,4 +14,4 @@ Accessing files:
   - Access the [ContextLens](https://contextlens.cls.ru.nl).
   - Access the [instruction of using ContextLens](https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md).
   - If you are instersted in running the code, the [requirements](https://github.com/rezashokrzad/ContextLens/blob/main/requirements.txt) are provided. 
-> We hope this tool will be helpful for data scientists and linguists who need a generic understandable language for communication. If you have any feedback or suggestions, please let us know by opening an issue in the repository.
+> We hope this tool will be helpful for data scientists and linguists who need a generic understandable language for communication. If you have any feedback or suggestions, please let us know by opening an issue in the repository. 
