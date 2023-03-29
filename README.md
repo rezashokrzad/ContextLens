@@ -10,7 +10,7 @@ We propose a visualization tool to depict different embedding algorithms color-g
 
 Accessing files:
   - This is a hyperlink to download the thesis file directely. [Thesis file](https://www.ru.nl/publish/pages/769526/reza_shokrzad.pdf).
-  - You can also find it in the Radbour University ICIS Master Thesis Lab. [Archive of Master Thesis Reports](https://www.ru.nl/icis/education/master-thesis/vm/theses-archive/) 
+  - You can also find it in the Radbour University ICIS Master Thesis Lab. [Archive of Master Thesis Reports](https://www.ru.nl/icis/education/master-thesis/vm/theses-archive/) [Thesis file](https://www.ru.nl/publish/pages/769526/reza_shokrzad.pdf)
   - Access the [ContextLens](https://contextlens.cls.ru.nl).
   - Access the [instruction of using ContextLens](https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md).
   - If you are instersted in running the code, the [requirements](https://github.com/rezashokrzad/ContextLens/blob/main/requirements.txt) are provided. 
