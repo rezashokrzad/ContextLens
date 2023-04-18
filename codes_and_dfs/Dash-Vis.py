@@ -49,8 +49,8 @@ data_2d = list(dict_main.keys())
 dict_method = {'PCA_BERT': 'PCA_BERT', 'UMP_BERT': 'UMP_BERT'}
 methods = list(dict_method.keys())
 
-dict_label = {'Label1': 'Label1', 'Label2': 'Label2',
-               'simple_majority_voting': 'simple_majority_voting','weighted_majority_voting': 'weighted_majority_voting','No label':'No label'}
+dict_label = {'Label1': 'Label1', 'Label2': 'Label2', 'simple_majority_voting': 'simple_majority_voting',
+              'weighted_majority_voting': 'weighted_majority_voting','No label':'No label'}
 labels = list(dict_label.keys())
 
 dict_comp_x = {'Dim1': 'x_1', 'Dim2': 'x_2', 'Dim3': 'x_3', 'Dim4': 'x_4', 'Dim5': 'x_5','Dim6': 'x_6', 'Dim7': 'x_7', 'Dim8': 'x_8', 'Dim9': 'x_9', 'Dim10': 'x_10'}
@@ -265,6 +265,7 @@ app.layout = html.Div([
     )
 def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_field, z_field, data, data_2d):
     global symbs
+    global sizes
     source = data['data']
     source_2d = data_2d['data']
     df = dict_main[df_name]
@@ -285,6 +286,15 @@ def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_f
     except:
         color_shape = 0
     
+    try:
+        symbol_3d = np.array(symbs)[df[label_name_shape]]
+    except:
+        symbol_3d = 0
+    
+    try:
+        size_symbol_3d = np.array(sizes)[df[label_name_shape]]
+    except:
+        size_symbol_3d = 8
     
     if x_field and y_field and z_field:
         source[0].update({'x': df[method_name+'_'+x_field].tolist(),
@@ -293,9 +303,9 @@ def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_f
         source_2d[0].update({'x': df[method_name+'_'+x_field].tolist(),
                              'y': df[method_name+'_'+y_field].tolist()})
         source[0].update({'marker':{'color':color_label,
-                                    'size':np.array(sizes)[df[label_name_shape]],
+                                    'size':size_symbol_3d,
                                     'colorscale':clr_scale,
-                                    'symbol':np.array(symbs)[df[label_name_shape]],
+                                    'symbol':symbol_3d,
                                     'sizemode':'diameter',
                                     'sizeref':1
                                     }})
