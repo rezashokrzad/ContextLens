@@ -4,7 +4,18 @@
     + b. You should see the ContextLens dashboard.
 2. **Uploading data**: 
     + a. Click on the "Choose File" button to select a ".csv" or ".xlsx" file to upload. 
-    + b. The file should contain a single column of up to 200 sentences.
+    + b. The file should contain a one to three column(s) of up to 200 sentences.
+    + c. The file should be header free
+    + d. Three possible versions of the file:
+        - one single column (includes only the texts)
+         ![image](https://user-images.githubusercontent.com/72080909/232730312-4456ef99-ccfe-4510-a6a5-a7028e55f266.png)
+
+        - two columns (include texts and user label 1)
+        ![image](https://user-images.githubusercontent.com/72080909/232730645-09ec894b-7cf8-4ca1-830e-4a712bcadce2.png)
+
+        - three columns (include texts, user lable 1 and user label 2) 
+        ![image](https://user-images.githubusercontent.com/72080909/232730843-1be6f345-45e6-4346-b729-7077515915f5.png)
+    + e. The labels are available in both menus of shape and color.
 3. **Specifying your desired word**:
     + a. In the "Desired word" text box, enter the word you want to explore.
     + b. You can also enter multiple distinct words by separating them with commas.
@@ -22,7 +33,8 @@
     + c. Hover over data points to see further detail, including the sentence the word is in, the index of the sentence in the data frame, and the label of the word.
 7. **Exporting data**:
    + a. Click on the hyperlink below the data frame menu to download a file containing the columns: sentences, dimensions after reduction procedures, and annotated labels.
+   + b. in case you do need to have word embeddings click on "without embedding" version. 
 
 > Note: ContextLens is designed to be user-friendly and interactive, allowing linguists to explore and interpret word embeddings quickly and easily. If you have any questions or encounter any issues while using the tool, refer to the additional resources on the GitHub repository or contact the developer for assistance.
 
-![dash02-cold](https://user-images.githubusercontent.com/72080909/225021955-bc2d45e2-e5c4-438b-b940-c2fa2a1656a0.png)
+![image](https://user-images.githubusercontent.com/72080909/232738606-66c0e6a4-f81e-441a-a3c4-3197a956f2fe.png)
