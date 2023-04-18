@@ -263,7 +263,7 @@ app.layout = html.Div([
     [State('Main-Graph', 'figure'),
      State('Main-Graph-2d', 'figure')]
     )
-def updateGraph(df_name, method_name, label_name,label_name_shape, x_field, y_field, z_field, data, data_2d):
+def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_field, z_field, data, data_2d):
     global symbs
     source = data['data']
     source_2d = data_2d['data']
@@ -293,7 +293,7 @@ def updateGraph(df_name, method_name, label_name,label_name_shape, x_field, y_fi
         source_2d[0].update({'x': df[method_name+'_'+x_field].tolist(),
                              'y': df[method_name+'_'+y_field].tolist()})
         source[0].update({'marker':{'color':color_label,
-                                    'size':np.array(sizes)[df['Label1']],
+                                    'size':np.array(sizes)[df[label_name_shape]],
                                     'colorscale':clr_scale,
                                     'symbol':np.array(symbs)[df[label_name_shape]],
                                     'sizemode':'diameter',
