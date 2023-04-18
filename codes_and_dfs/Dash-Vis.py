@@ -24,9 +24,9 @@ Label1 = pd.DataFrame()
 Label2 = pd.DataFrame()
 
 #read dataframes of adjectives
-df1 = pd.read_excel('SemCor_interactive_df_great.xlsx')
+df1 = pd.read_excel('SemCor_interactive_df_present.xlsx')
 df2 = pd.read_excel('SemCor_interactive_df_cold.xlsx')
-df3 = pd.read_excel('SemCor_interactive_df_present.xlsx')
+df3 = pd.read_excel('SemCor_interactive_df_great.xlsx')
 df4 = pd.read_excel('SemCor_interactive_df_domestic.xlsx')
 df5 = pd.read_excel('Hotel_df_list1.xlsx')
 df6 = pd.read_excel('Hotel_df_list2.xlsx')
@@ -73,7 +73,7 @@ clr_scale = [[0, 'rgb(255,0,0)'], [0.1, 'rgb(255,128,50)'], [0.2, 'rgb(100,205,2
 #symbbols of shape datapoints in scatter3d
 symbs = ['circle', 'square', 'x', 'diamond', 'cross', 'circle-open', 'square-open', 'diamond-open']
 #size of symbol list
-sizes = [8, 7, 9, 12, 20, 20, 20, 20]
+sizes = [8, 7, 8, 8, 8, 20, 20, 20]
 #sctter3d setup
 scatter_plot_3d = go.Scatter3d(x=df1["PCA_BERT_Dim1"],
                                 y=df1["PCA_BERT_Dim2"],
