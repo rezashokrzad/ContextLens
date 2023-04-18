@@ -73,7 +73,7 @@ clr_scale = [[0, 'rgb(255,0,0)'], [0.1, 'rgb(255,128,50)'], [0.2, 'rgb(100,205,2
 #symbbols of shape datapoints in scatter3d
 symbs = ['circle', 'square', 'x', 'diamond', 'cross', 'circle-open', 'square-open', 'diamond-open']
 #size of symbol list
-sizes = [8, 7, 8, 8, 8, 20, 20, 20]
+sizes = [8, 7, 9, 12, 20, 20, 20, 20]
 #sctter3d setup
 scatter_plot_3d = go.Scatter3d(x=df1["PCA_BERT_Dim1"],
                                 y=df1["PCA_BERT_Dim2"],
