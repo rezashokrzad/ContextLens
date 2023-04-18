@@ -181,7 +181,7 @@ app.layout = html.Div([
     html.H1('ContextLens', style={'text-align': 'center'}),
     html.Center(html.Div([
     html.H6('An embedding visualization and clustering tool', style={'display': 'inline-block','margin':'6'}),
-    html.A(",  (Instruction and about)", href='https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md', target="_blank",style={'display': 'inline-block'})
+    html.A("(Instruction and about)", href='https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md', target="_blank",style={'display': 'inline-block'})
     ])),
     html.Center([html.Div(dcc_upload,id='output-data-upload'),
                  html.Div([
@@ -294,7 +294,7 @@ def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_f
     try:
         size_symbol_3d = np.array(sizes)[df[label_name_shape]]
     except:
-        size_symbol_3d = 5
+        size_symbol_3d = 4
     
     if x_field and y_field and z_field:
         source[0].update({'x': df[method_name+'_'+x_field].tolist(),
