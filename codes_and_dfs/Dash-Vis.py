@@ -294,7 +294,7 @@ def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_f
     try:
         size_symbol_3d = np.array(sizes)[df[label_name_shape]]
     except:
-        size_symbol_3d = 8
+        size_symbol_3d = 5
     
     if x_field and y_field and z_field:
         source[0].update({'x': df[method_name+'_'+x_field].tolist(),
