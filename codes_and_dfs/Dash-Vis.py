@@ -160,7 +160,7 @@ dcc_upload = dcc.Upload(id='upload-data', children=html.Div(['Drag & Drop or ',
                         # Allow multiple files to be uploaded
                         multiple=False)
 
-dcc_input_text = dcc.Input(id='word', value='', type='text', placeholder='your desire word(s), seperated by ","',
+dcc_input_text = dcc.Input(id='word', value='', type='text', placeholder='your desire word(s), separated by ","',
                       style={'width': '90%',
                              'height': '25px',
                              'lineHeight': '50px',
