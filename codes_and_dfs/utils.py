@@ -43,8 +43,19 @@ def create_df5d(pca_bert_base_5C, method_name):
   return inter_df
 
 def emphasize_word(sent_list , word_label_string):
+    def add_breaks(sentence):
+        if len(sentence) <= 80:
+            return sentence
+        parts = []
+        start = 0
+        while start < len(sentence):
+            parts.append(sentence[start:start + 80])
+            start += 80
+        return '<br>'.join(parts)
+    
     for i in range(len(word_label_string)):
         sent_list[i] = sent_list[i].replace(word_label_string[i] , '<em>' + word_label_string[i] + '</em>')
+        sent_list[i] = add_breaks(sent_list[i])
 
     return sent_list
 def standardize_dataframe \
@@ -290,7 +301,7 @@ def get_dataframe(doc, word, Label1 , Label2, n_cluster=5):
     layer_num = 8
     embs = get_bert_embs(doc, layer_num)
     
-    embs_filtered, word_label,word_label_string, sent_list, sent_idx = filter_embs(doc , embs, word, layer_num)
+    embs_filtered, word_label, word_label_string, sent_list, sent_idx = filter_embs(doc , embs, word, layer_num)
     
     cluster_kmeans_idx = clustering_kmeans(embs_filtered, n_cluster)
     cluster_agg_idx = clustering_agg(embs_filtered, n_cluster)
@@ -303,7 +314,7 @@ def get_dataframe(doc, word, Label1 , Label2, n_cluster=5):
     cluster_pca_agg_idx = clustering_agg(embs_pca, n_cluster)
     cluster_umap_agg_idx = clustering_agg(embs_umap, n_cluster)
     
-    [cluster_kmeans_idx,cluster_agg_idx,cluster_pca_kmeans_idx,cluster_umap_kmeans_idx,cluster_pca_agg_idx,cluster_umap_agg_idx] \
+    [cluster_kmeans_idx, cluster_agg_idx, cluster_pca_kmeans_idx, cluster_umap_kmeans_idx, cluster_pca_agg_idx, cluster_umap_agg_idx] \
         = label_alignment(word_label, cluster_kmeans_idx,cluster_agg_idx,cluster_pca_kmeans_idx,cluster_umap_kmeans_idx,cluster_pca_agg_idx,cluster_umap_agg_idx)
     
     voted_label = voting(cluster_kmeans_idx,cluster_agg_idx,cluster_pca_kmeans_idx,cluster_umap_kmeans_idx,cluster_pca_agg_idx,cluster_umap_agg_idx)

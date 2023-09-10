@@ -25,14 +25,15 @@ Label2 = pd.DataFrame()
 
 #read dataframes of adjectives
 df1 = pd.read_excel('SemCor_interactive_df_present.xlsx')
-df2 = pd.read_excel('SemCor_interactive_df_cold.xlsx')
-df3 = pd.read_excel('SemCor_interactive_df_great.xlsx')
-df4 = pd.read_excel('SemCor_interactive_df_domestic.xlsx')
-df5 = pd.read_excel('Hotel_df_list1.xlsx')
-df6 = pd.read_excel('Hotel_df_list2.xlsx')
-df7 = pd.read_excel('Hotel_df_list3.xlsx')
-df8 = pd.read_excel('Hotel_df_list4.xlsx')
-df9 = pd.DataFrame()
+df2 = pd.read_excel('SemCor_interactive_df_state171.xlsx')
+df3 = pd.read_excel('SemCor_interactive_df_cold.xlsx')
+df4 = pd.read_excel('SemCor_interactive_df_great.xlsx')
+df5 = pd.read_excel('SemCor_interactive_df_domestic.xlsx')
+df6 = pd.read_excel('Hotel_df_list1.xlsx')
+df7 = pd.read_excel('Hotel_df_list2.xlsx')
+df8 = pd.read_excel('Hotel_df_list3.xlsx')
+df9 = pd.read_excel('Hotel_df_list4.xlsx')
+df0 = pd.DataFrame()
 
 #receive tooltip content
 tooltip_columns = ['text', 'idx', 'Label1' , 'Label2', 'simple_majority_voting', 'weighted_majority_voting']
@@ -40,9 +41,9 @@ tooltip_list = df1[tooltip_columns].values.tolist()
 
 #dash setup
 app = dash.Dash(external_stylesheets=[dbc.themes.MATERIA, 'stylesheet.css'])
-dict_main = {'df_present':df1, 'df_cold':df2, 'df_great':df3, 'df_domestic':df4,
-             'df_hotel_list1':df5, 'df_hotel_list2':df6, 'df_hotel_list3':df7,
-             'df_hotel_list4':df8, 'df_user':df9}
+dict_main = {'df_present':df1, 'df_state':df2, 'df_cold':df3, 'df_great':df4,
+             'df_domestic':df5, 'df_hotel_list1':df6, 'df_hotel_list2':df7,
+             'df_hotel_list3':df8, 'df_hotel_list4':df9, 'df_user':df0}
 data = list(dict_main.keys())
 data_2d = list(dict_main.keys())
 
@@ -395,34 +396,34 @@ def process_file(clicks, input_w, input_n):
     try:
         input_n = int(input_n)
         if input_n <= 0:
-            return html.A("Number of clusters should be a positive integer",id="log")    
+            return html.A("Number of clusters should be a positive integer", id="log")    
     except ValueError:
         if input_n == '':
             input_n = 5
         else:
-            return html.A("Invalid number of clusters",id="log")    
+            return html.A("Invalid number of clusters", id="log")    
 
     if not user_doc.empty and user_doc.shape[0] > 200:
-        return html.A("Number of sentences should not exceed 200",id="log")
+        return html.A("Number of sentences should not exceed 200", id="log")
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
         try:
-            df9 = utils.get_dataframe(user_doc, input_w,Label1,Label2, input_n) # sense level
-            dict_main['df_user'] = df9
+            df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, input_n) # sense level
+            dict_main['df_user'] = df0
         except:
-            return html.A("The provided word is not presented in your doc",id="log")
+            return html.A("The provided word is not presented in your doc", id="log")
             
     elif len(input_w[0]) == 0 and user_doc.empty:
-        return html.A("Please upload your file and provide target words",id="log")
+        return html.A("Please upload your file and provide target words", id="log")
     elif len(input_w[0]) == 0:
-        return html.A("Please enter words correctly",id="log")
+        return html.A("Please enter words correctly", id="log")
         # return "Please enter words correctly"
     elif not user_doc.empty:
-        df9 = utils.get_dataframe(user_doc, input_w,Label1,Label2, len(input_w)) # word level
-        dict_main['df_user'] = df9
+        df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, len(input_w)) # word level
+        dict_main['df_user'] = df0
     else:
-        return html.A("Something is wrong with inputs",id="log")
+        return html.A("Something is wrong with inputs", id="log")
     
-    return html.A("Process done, please select df_user from dataframe dropdown",id="log")
+    return html.A("Process done, please select df_user from dataframe dropdown", id="log")
 
 @app.server.route("/download/<path:path>")
 def serve_static(path):
