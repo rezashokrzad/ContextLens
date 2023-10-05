@@ -96,7 +96,8 @@ fig3d = go.Figure(data=[scatter_plot_3d], layout=go.Layout(scene = dict(xaxis = 
                                                              yaxis = dict(title='Dim2', tickfont=dict(size=13)),
                                                              zaxis = dict(title='Dim3', tickfont=dict(size=13)),
                                                              camera=dict(eye=dict(x=1, y=1, z=1)))))
-dcc_graph = dcc.Graph(id='Main-Graph', figure=fig3d.update_layout(
+dcc_graph = dcc.Graph(id='Main-Graph',
+                      figure=fig3d.update_layout(
                           template={'data': {'pie': [{'automargin': False, 'type': 'pie'}],
                                                                            'scatter3d': [{'line': {'width': 3},
                                                                                           'marker': {'size': 9},
@@ -128,8 +129,9 @@ dcc_graph = dcc.Graph(id='Main-Graph', figure=fig3d.update_layout(
                                                         height=750,
                                                         legend={'title': 'Label'},
                                                         title= 'plot_title',
-                                                        plot_bgcolor='rgb(240,240,240)',
-                                                        margin=dict(t=150, b=0, l=0, r=0),
+                                                        plot_bgcolor= '#ecf0f1',
+                                                        paper_bgcolor='white',
+                                                        margin=dict(t=150, b=0, l=0, r=10),
                                                         ))
 
 #2d graph
@@ -153,99 +155,130 @@ dcc_graph_2d = dcc.Graph(id='Main-Graph-2d', figure=fig2d.update_layout(
                                                         plot_bgcolor='rgb(240,245,250)',
                                                         margin=dict(t=150, b=150, l=50, r=50)))
 
-dcc_upload = dcc.Upload(id='upload-data', children=html.Div(['Drag & Drop or ',
-                                                             html.A('Select a File')]),
+dcc_upload = dcc.Upload(id='upload-data', children=html.Div([html.I(className="fas fa-upload", style={'margin-right': '5px'}),
+                                                             'Drag your file here or ',
+                                                             html.A('Browse', style={'color': '#3498db', 'text-decoration': 'none', 'font-weight': 'bold'})]),
                         style={'width': '30%', 'height': '60px','lineHeight': '60px',
                                'borderWidth': '1px', 'borderStyle': 'dashed', 'borderRadius': '5px',
-                               'textAlign': 'center', 'margin': '1px 1px 1px 1px', 'backgroundColor': '#f2f2f2'},
+                               'textAlign': 'center', 'margin': '1px 1px 1px 1px', 'backgroundColor': '#E0F7FA'},
                         # Allow multiple files to be uploaded
                         multiple=False)
 
-dcc_input_text = dcc.Input(id='word', value='', type='text', placeholder='your desire word(s), separated by ","',
-                      style={'width': '90%',
-                             'height': '25px',
+
+common_style = {'width': '90%',
+                             'height': '30px',
+                             'fontSize': '16px',
+                             'border': '2px solid #e1e1e1',
+                             'borderRadius': '5px',
+                             'padding': '5px 10px',
                              'lineHeight': '50px',
                              'borderWidth': '1px',
                              'textAlign': 'center',
                              'margin': '1px 1px 1px 1px',
-                             })
-dcc_input_number = dcc.Input(id='number', value='', type='text', placeholder='#clusters (default 5 for single word)',
-                      style={'width': '90%',
-                             'height': '25px',
-                             'lineHeight': '50px',
-                             'borderWidth': '1px',
-                             'textAlign': 'center',
-                             'margin': '1px 1px 1px 1px',
-                             })
+                             'color': '#333',
+                             'transition': 'border 0.3s'}
+dcc_input_text = dcc.Input(id='word', value='', type='text', placeholder='your desire word(s), separated by ","', style=common_style)
+dcc_input_number = dcc.Input(id='number', value='', type='text', placeholder='#clusters (default 5 for single word)', style=common_style)
+dropdown_style = {'height': '25px',
+                  'fontSize': '14px',
+                  'borderRadius': '5px',
+                  'color': '#333',
+                  'transition': 'border 0.3s'}
+# Common style for labels
+label_style = {'font-weight': 'bold',
+               'color': '#2c3e50',
+               'font-size': '0.95em',
+               'margin-left': '5px'}
 
 app.layout = html.Div([
-    html.H1('ContextLens', style={'text-align': 'center'}),
+    html.H1('ContextLens', style={'text-align': 'center', 'font-weight': 'bold'}),
     html.Center(html.Div([
-    html.H6('An embedding visualization and clustering tool', style={'display': 'inline-block','margin':'6'}),
-    html.A("(Instruction and about)", href='https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md', target="_blank",style={'display': 'inline-block'})
+    html.H6('An embedding visualization and clustering tool', style={'display': 'inline-block','margin':'6', 'color': '#2c3e50', 'font-family': 'Comic Sans MS'}),
+    html.Span(' '),
+    html.I(className="fas fa-info-circle", style={'margin-right': '3px', 'color': '#3498db'}),
+    html.A("(Instruction and about)", href='https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md',
+           target="_blank", style={'color': '#3498db', 'text-decoration': 'none', 'font-family': 'Comic Sans MS'})
     ])),
     html.Center([html.Div(dcc_upload,id='output-data-upload'),
                  html.Div([
                      html.Div(dcc_input_text,id="input_word", style={'width': '17%', 'display': 'inline-block'}),
                      html.Div(dcc_input_number,id="input_number", style={'width': '17%', 'display': 'inline-block'})]),
-                  html.Button('Process', id='process_button'),
+                  html.Button('Process', id='process_button', style={'background-color': '#3498db', 'color': 'white', 'border': 'none', 'padding': '4px 20px', 'cursor': 'pointer'}),
                   html.Div(html.A(id='log', children='Ready', style={"color": "blue"}))
 
                  ]),
 
     html.Div(id='output_div'),
-
-    html.Div([html.Label("Dataframe"), dcc.Dropdown(id='data-dropdown',
-                               options=[{'label': label, 'value': label} for label in data],
-                               value=list(dict_main.keys())[0],
-                               multi=False,
-                               clearable=False,
-                               searchable=False)], style={'width': '16%', 'display': 'inline-block'}),
+    html.Div([
+    html.Div([html.I(className="fas fa-database", style={'margin-right': '2px'}),
+              html.Label("Dataframe", style=label_style),
+              dcc.Dropdown(id='data-dropdown',
+                           options=[{'label': label, 'value': label} for label in data],
+                           value=list(dict_main.keys())[0],
+                           multi=False,
+                           clearable=False,
+                           searchable=False, style=dropdown_style)], style={'width': '10%', 'display': 'inline-block'}),
         
-    html.Div([html.Label("Method"), dcc.Dropdown(id='method-dropdown',
+    html.Div([html.I(className="fas fa-cogs", style={'margin-right': '2px'}),
+              html.Label("Method", style=label_style),
+              dcc.Dropdown(id='method-dropdown',
                                options=[{'label': label, 'value': label} for label in methods],
                                value=list(dict_method.keys())[0],
                                multi=False,
                                clearable=False,
-                               searchable=False)], style={'width': '16%', 'display': 'inline-block'}),
-    html.Div([html.Label("Color Label"), dcc.Dropdown(id='label-dropdown',
+                               searchable=False, style=dropdown_style)],  style={'width': '10%', 'display': 'inline-block'}),
+    html.Div([html.I(className="fas fa-palette", style={'margin-right': '2px'}),
+              html.Label("Color Label", style=label_style),
+              dcc.Dropdown(id='label-dropdown',
                                options=[{'label': label, 'value': label} for label in labels],
                                value=list(dict_label.keys())[0],
                                multi=False,
                                clearable=False,
-                               searchable=False)], style={'width': '16%', 'display': 'inline-block'}),
-    html.Div([html.Label("Shape Label"), dcc.Dropdown(id='label-dropdown-shape',
+                               searchable=False, style=dropdown_style)],  style={'width': '10%', 'display': 'inline-block'}),
+    html.Div([html.I(className="fas fa-shapes", style={'margin-right': '2px'}),
+              html.Label("Shape Label", style=label_style),
+              dcc.Dropdown(id='label-dropdown-shape',
                                options=[{'label': label, 'value': label} for label in labels],
                                value=list(dict_label.keys())[0],
                                multi=False,
                                clearable=False,
-                               searchable=False)], style={'width': '16%', 'display': 'inline-block'}),
+                               searchable=False, style=dropdown_style)],  style={'width': '10%', 'display': 'inline-block'}),
         
-    html.Div([html.Label("X-Axis"), dcc.Dropdown(id='x-axis-dropdown', 
+    html.Div([html.I(className="fas fa-chart-line", style={'margin-right': '2px'}),
+              html.Label("X-Axis", style=label_style),
+              dcc.Dropdown(id='x-axis-dropdown', 
                                options=[{'label': label, 'value': label} for label in comp_x],
                                value=list(dict_comp_x.keys())[0],
                                multi=False,
                                clearable=False,
-                               searchable=False)],style={'width': '12%', 'display': 'inline-block'}),
+                               searchable=False, style=dropdown_style)],  style={'width': '6%', 'display': 'inline-block'}),
                                  
-    html.Div([html.Label("Y-Axis"), dcc.Dropdown(id='y-axis-dropdown', 
+    html.Div([html.I(className="fas fa-chart-line", style={'margin-right': '2px'}),
+              html.Label("Y-Axis", style=label_style),
+              dcc.Dropdown(id='y-axis-dropdown', 
                                options=[{'label': label, 'value': label} for label in comp_y],
                                value=list(dict_comp_y.keys())[0],
                                multi=False,
                                clearable=False,
-                               searchable=False)],style={'width': '12%', 'display': 'inline-block'}),
-    html.Div([html.Label("Z-Axis"), dcc.Dropdown(id='z-axis-dropdown', 
+                               searchable=False, style=dropdown_style)],  style={'width': '6%', 'display': 'inline-block'}),
+    html.Div([html.I(className="fas fa-chart-line", style={'margin-right': '2px'}),
+              html.Label("Z-Axis", style=label_style),
+              dcc.Dropdown(id='z-axis-dropdown', 
                                options=[{'label': label, 'value': label} for label in comp_z],
                                value=list(dict_comp_z.keys())[0],
                                multi=False,
                                clearable=False,
-                               searchable=False)],style={'width': '12%', 'display': 'inline-block'}),
+                               searchable=False, style=dropdown_style)],  style={'width': '6%', 'display': 'inline-block'}),
+    ], style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center', 'flexWrap': 'wrap'}),
+    
+    html.Div([
     html.Div(html.A(id='download-link', children='Download File Emb')),
-    html.Div(html.A(id='download-link-emb', children='Download File')),
-
+    html.Div(html.A(id='download-link-emb', children='Download File'))
+    ], style={'textAlign': 'left', 'marginTop': '20px', 'marginLeft': '400px'}),
+    
     html.Center([
-    html.Div(dcc_graph, style={'width': '48%', 'display': 'inline-block'}),
-    html.Div(dcc_graph_2d, style={'width': '48%', 'display': 'inline-block'})])
+    html.Div(dcc_graph, style={'width': '48%', 'display': 'inline-block', 'borderRadius': '20px', 'overflow': 'hidden', 'marginRight': '0.5%'}),
+    html.Div(dcc_graph_2d, style={'width': '45%', 'display': 'inline-block', 'borderRadius': '20px', 'overflow': 'hidden', 'marginLeft': '0.5%'})])
     ])
 
 
@@ -316,14 +349,19 @@ def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_f
                                        'symbol':color_shape
                                        }})
         
-        data['layout'].update({'title': {'text': str(method_name)+" | "+x_field+' vs '+y_field+' vs '+z_field}})
+        data['layout'].update({'title': {'text': str(method_name)+" | "+x_field+' vs '+y_field+' vs '+z_field,
+                                         'font': {'family': 'Arial, sans-serif', 'size': 18, 'color': 'black',  'weight': 'bold'},
+                                         'x': 0.5,  'y': 0.95,  'xanchor': 'center', 'yanchor': 'top'}})
         data['layout']['scene']['xaxis'] = {**data['layout']['scene']['xaxis'], 'title': {'text': x_field}}
         data['layout']['scene']['yaxis'] = {**data['layout']['scene']['yaxis'], 'title': {'text': y_field}}
         data['layout']['scene']['zaxis'] = {**data['layout']['scene']['zaxis'], 'title': {'text': z_field}}
-        data_2d['layout'].update({'title': {'text': str(method_name)+" | "+x_field+' vs '+y_field}})
+
+        data_2d['layout'].update({'title': {'text': str(method_name)+" | "+x_field+' vs '+y_field,
+                                            'font': {'family': 'Arial, sans-serif', 'size': 18, 'color': 'black',  'weight': 'bold'},
+                                            'x': 0.5,  'y': 0.95,  'xanchor': 'center', 'yanchor': 'top'}})
         data_2d['layout']['xaxis'] = {**data_2d['layout']['xaxis'], 'title': {'text': x_field}}
         data_2d['layout']['yaxis'] = {**data_2d['layout']['yaxis'], 'title': {'text': y_field}}
-
+        
     current_df_emb = dict_main[df_name]
     current_df_name_emb =  df_name + '_emb_' + str(np.random.randint(100000)+1)
     current_df_emb.to_excel("./download/" + current_df_name_emb +".xlsx", encoding='utf-8')
@@ -339,8 +377,12 @@ def updateGraph(df_name, method_name, label_name, label_name_shape, x_field, y_f
     url_string_emb = './download/' +current_df_name_emb+ '.xlsx'
     url_string = './download/' +current_df_name+ '.xlsx'
     
-    return [[html.A("Download dataframe with embeddings", href=url_string_emb, target="_blank", download=url_string_emb)],
-            [html.A("Download dataframe without embeddings", href=url_string, target="_blank", download=url_string)],
+    return [[html.I(className="fas fa-cloud-download-alt", style={'margin-right': '5px', 'color': '#3498db'}),
+             html.A("Download dataframe with embeddings", href=url_string_emb, target="_blank", download=url_string_emb
+                    , style={'color': '#3498db', 'text-decoration': 'none', 'font-family': 'Comic Sans MS'})],
+            [html.I(className="fas fa-cloud-download-alt", style={'margin-right': '5px', 'color': '#3498db'}),
+             html.A("Download dataframe without embeddings", href=url_string, target="_blank", download=url_string,
+                    style={'color': '#3498db', 'text-decoration': 'none', 'font-family': 'Comic Sans MS'})],
             {'data': source, 'layout': data['layout']},
             {'data': source_2d, 'layout': data_2d['layout']}]
 
@@ -404,26 +446,26 @@ def process_file(clicks, input_w, input_n):
             return html.A("Invalid number of clusters", id="log")    
 
     if not user_doc.empty and user_doc.shape[0] > 200:
-        return html.A("Number of sentences should not exceed 200", id="log")
+        return html.A("Number of sentences should not exceed 200", id="log", style={'color': 'red'})
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
         try:
             df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, input_n) # sense level
             dict_main['df_user'] = df0
         except:
-            return html.A("The provided word is not presented in your doc", id="log")
+            return html.A("The provided word is not presented in your doc", id="log", style={'color': 'red'})
             
     elif len(input_w[0]) == 0 and user_doc.empty:
-        return html.A("Please upload your file and provide target words", id="log")
+        return html.A("Please upload your file and provide target words", id="log", style={'color': '#3498db', 'font-family': 'Comic Sans MS'})
     elif len(input_w[0]) == 0:
-        return html.A("Please enter words correctly", id="log")
+        return html.A("Please enter words correctly", id="log", style={'color': 'red'})
         # return "Please enter words correctly"
     elif not user_doc.empty:
         df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, len(input_w)) # word level
         dict_main['df_user'] = df0
     else:
-        return html.A("Something is wrong with inputs", id="log")
+        return html.A("Something is wrong with inputs", id="log", style={'color': 'red'})
     
-    return html.A("Process done, please select df_user from dataframe dropdown", id="log")
+    return html.A("Process done, please select df_user from dataframe dropdown", id="log", style={'color': 'green'})
 
 @app.server.route("/download/<path:path>")
 def serve_static(path):
