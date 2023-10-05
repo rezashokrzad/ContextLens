@@ -193,7 +193,9 @@ dropdown_style = {'height': '25px',
 label_style = {'font-weight': 'bold',
                'color': '#2c3e50',
                'font-size': '0.95em',
-               'margin-left': '5px'}
+               'margin-left': '5px',
+               'margin-bottom': '-5px',
+              'margin-top': '10px'}
 
 app.layout = html.Div([
     html.Link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"),
