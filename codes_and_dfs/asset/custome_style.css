@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.dropdown-label {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.01em;
+    background-color: #ecf0f1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fas.fa-download {
+    color: #3498db !important;
+}
+
+input[type="text"]:hover, input[type="text"]:focus {
+    border: 2px solid #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}

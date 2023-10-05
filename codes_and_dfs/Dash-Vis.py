@@ -40,7 +40,12 @@ tooltip_columns = ['text', 'idx', 'Label1' , 'Label2', 'simple_majority_voting',
 tooltip_list = df1[tooltip_columns].values.tolist()
 
 #dash setup
-app = dash.Dash(external_stylesheets=[dbc.themes.MATERIA, 'stylesheet.css'])
+external_stylesheets = [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'
+]
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
 dict_main = {'df_present':df1, 'df_state':df2, 'df_cold':df3, 'df_great':df4,
              'df_domestic':df5, 'df_hotel_list1':df6, 'df_hotel_list2':df7,
              'df_hotel_list3':df8, 'df_hotel_list4':df9, 'df_user':df0}
@@ -191,6 +196,7 @@ label_style = {'font-weight': 'bold',
                'margin-left': '5px'}
 
 app.layout = html.Div([
+    html.Link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"),
     html.H1('ContextLens', style={'text-align': 'center', 'font-weight': 'bold'}),
     html.Center(html.Div([
     html.H6('An embedding visualization and clustering tool', style={'display': 'inline-block','margin':'6', 'color': '#2c3e50', 'font-family': 'Comic Sans MS'}),
@@ -199,14 +205,15 @@ app.layout = html.Div([
     html.A("(Instruction and about)", href='https://github.com/rezashokrzad/ContextLens/blob/main/ContextLens%20Instruction.md',
            target="_blank", style={'color': '#3498db', 'text-decoration': 'none', 'font-family': 'Comic Sans MS'})
     ])),
-    html.Center([html.Div(dcc_upload,id='output-data-upload'),
-                 html.Div([
+    html.Center([dcc.Loading(id="loading", type="circle", fullscreen=True,
+                             children=[html.Div(dcc_upload,id='output-data-upload'),
+                                       html.Div([
                      html.Div(dcc_input_text,id="input_word", style={'width': '17%', 'display': 'inline-block'}),
                      html.Div(dcc_input_number,id="input_number", style={'width': '17%', 'display': 'inline-block'})]),
                   html.Button('Process', id='process_button', style={'background-color': '#3498db', 'color': 'white', 'border': 'none', 'padding': '4px 20px', 'cursor': 'pointer'}),
                   html.Div(html.A(id='log', children='Ready', style={"color": "blue"}))
 
-                 ]),
+                 ])]),
 
     html.Div(id='output_div'),
     html.Div([
