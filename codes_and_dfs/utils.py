@@ -305,7 +305,8 @@ def get_dataframe(doc, word, Label1 , Label2, n_cluster=5):
     
     cluster_kmeans_idx = clustering_kmeans(embs_filtered, n_cluster)
     cluster_agg_idx = clustering_agg(embs_filtered, n_cluster)
-    
+    embs_filtered = np.nan_to_num(embs_filtered, nan=0.0)
+
     embs_pca = dimension_reduction_pca(embs_filtered)
     embs_umap = dimension_reduction_umap(embs_filtered)
         
