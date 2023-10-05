@@ -279,7 +279,7 @@ app.layout = html.Div([
     html.Center([
     html.Div(dcc_graph, style={'width': '48%', 'display': 'inline-block', 'borderRadius': '20px', 'overflow': 'hidden', 'marginRight': '0.5%'}),
     html.Div(dcc_graph_2d, style={'width': '45%', 'display': 'inline-block', 'borderRadius': '20px', 'overflow': 'hidden', 'marginLeft': '0.5%'})])
-    ])
+    ], style={'backgroundColor': '#f5f5f5'})
 
 
 @app.callback(
@@ -433,7 +433,7 @@ def process_file(clicks, input_w, input_n):
     global user_doc
     global Label1
     global Label2
-    input_w = input_w.split(',')
+    input_w = [word.strip() for word in input_w.split(',') if word.strip()]
     
     try:
         input_n = int(input_n)
@@ -446,18 +446,18 @@ def process_file(clicks, input_w, input_n):
             return html.A("Invalid number of clusters", id="log")    
 
     if not user_doc.empty and user_doc.shape[0] > 200:
-        return html.A("Number of sentences should not exceed 200", id="log", style={'color': 'red'})
+        return html.A("Number of sentences should not exceed 200", id="log", style={'color': 'red', 'font-family': 'Comic Sans MS'})
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
         try:
             df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, input_n) # sense level
             dict_main['df_user'] = df0
         except:
-            return html.A("The provided word is not presented in your doc", id="log", style={'color': 'red'})
+            return html.A("The provided word is not presented in your doc", id="log", style={'color': 'red', 'font-family': 'Comic Sans MS'})
             
-    elif len(input_w[0]) == 0 and user_doc.empty:
+    elif not input_w or len(input_w[0]) == 0 and user_doc.empty:
         return html.A("Please upload your file and provide target words", id="log", style={'color': '#3498db', 'font-family': 'Comic Sans MS'})
     elif len(input_w[0]) == 0:
-        return html.A("Please enter words correctly", id="log", style={'color': 'red'})
+        return html.A("Please enter words correctly", id="log", style={'color': 'red', 'font-family': 'Comic Sans MS'})
         # return "Please enter words correctly"
     elif not user_doc.empty:
         df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, len(input_w)) # word level
@@ -465,7 +465,7 @@ def process_file(clicks, input_w, input_n):
     else:
         return html.A("Something is wrong with inputs", id="log", style={'color': 'red'})
     
-    return html.A("Process done, please select df_user from dataframe dropdown", id="log", style={'color': 'green'})
+    return html.A("Process done, please select df_user from dataframe dropdown", id="log", style={'color': 'green', 'font-family': 'Comic Sans MS'})
 
 @app.server.route("/download/<path:path>")
 def serve_static(path):
