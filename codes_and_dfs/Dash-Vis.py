@@ -44,7 +44,7 @@ external_stylesheets = [
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'
 ]
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, , title="ContextLens")
 
 dict_main = {'df_present':df1, 'df_state':df2, 'df_cold':df3, 'df_great':df4,
              'df_domestic':df5, 'df_hotel_list1':df6, 'df_hotel_list2':df7,
