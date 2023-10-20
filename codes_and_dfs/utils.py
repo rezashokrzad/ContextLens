@@ -120,11 +120,11 @@ def get_bert_embs(doc, layer_num):
     
     print(str(doc.values[0][0]))
     print(str(doc.values[-1][0]))
-    l1 = 10
-    l2 = 10
-    if len(doc.values[0][0]) < 10:
+    l1 = 15
+    l2 = 15
+    if len(doc.values[0][0]) < l1:
         l1 = len(doc.values[0][0])
-    if len(doc.values[-1][0]) < 10:
+    if len(doc.values[-1][0]) < l1:
         l2 = len(doc.values[-1][0])
         
     doc_save_name = './temp/'+doc.values[0][0][:l1] + doc.values[-1][0][-l2:]
