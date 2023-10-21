@@ -454,8 +454,8 @@ def process_file(clicks, input_w, input_n):
         else:
             return html.A("Invalid number of clusters", id="log")    
 
-    if not user_doc.empty and user_doc.shape[0] > 200:
-        return html.A("Number of sentences should not exceed 200", id="log", style={'color': 'red', 'font-family': 'Comic Sans MS'})
+    if not user_doc.empty and user_doc.shape[0] > 1000:
+        return html.A("Number of sentences should not exceed 1000", id="log", style={'color': 'red', 'font-family': 'Comic Sans MS'})
     elif len(input_w) == 1 and len(input_w[0]) != 0 and not user_doc.empty:
         try:
             df0 = utils.get_dataframe(user_doc, input_w,Label1,Label2, input_n) # sense level
