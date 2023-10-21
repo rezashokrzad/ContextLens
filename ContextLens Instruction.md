@@ -4,7 +4,7 @@
     + b. You should see the ContextLens dashboard.
 2. **Uploading data**: 
     + a. Click on the "Choose File" button to select a ".csv" or ".xlsx" file to upload. 
-    + b. The file should contain a one to three column(s) of up to 200 sentences.
+    + b. The file should contain a one to three column(s) of up to 1000 sentences.
     + c. The file should be header free
     + d. Three possible versions of the file:
         - one single column (includes only the texts)
