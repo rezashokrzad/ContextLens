@@ -129,7 +129,7 @@ def get_bert_embs(doc, layer_num):
         
     doc_save_name = './temp/'+doc.values[0][0][:l1] + doc.values[-1][0][-l2:]
     
-    if os.path.isfile(doc_save_name):
+    if False and os.path.isfile(doc_save_name):
         open_file = open(doc_save_name, "rb")
         em_list = pickle.load(open_file)
         open_file.close()
@@ -145,9 +145,9 @@ def get_bert_embs(doc, layer_num):
             print('except ************')
             pass
         
-        open_file = open(doc_save_name, "wb")
-        pickle.dump(em_list, open_file)
-        open_file.close()
+        #open_file = open(doc_save_name, "wb")
+        #pickle.dump(em_list, open_file)
+        #open_file.close()
     
     return em_list
 
